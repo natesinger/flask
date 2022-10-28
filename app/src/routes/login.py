@@ -21,6 +21,7 @@ from flask import (
 # Internal imports
 from src.sso_helper import retrieve_jwks, decode_retreived_jwt
 from src.user_helper import validate_password_bcrypt
+from src.session_helper import create_session
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -57,8 +58,12 @@ def login():
                                     google_client_id=GOOGLE_CLIENT_ID,
                                     bad_login="credentials")  
 
-            # do success stuff
-            print('success')
+            user_id = retreived_account[0]
+            session_token = create_session(user_id)
+
+            response = redirect("/")
+            response.set_cookie('Authorization', f"Bearer {session_token}")
+            return response
 
         
         # assume the user is attempting SSO
@@ -86,8 +91,12 @@ def login():
                                    google_client_id=GOOGLE_CLIENT_ID,
                                    bad_login="generic")
 
-            print('success')
-            print(retreived_account)
+            user_id = retreived_account[0]
+            session_token = create_session(user_id)
+
+            response = redirect("/")
+            response.set_cookie('Authorization', f"Bearer {session_token}")
+            return response
 
 
 

@@ -82,20 +82,20 @@ class Database:
 
         except Exception as e:
             print("Error while inserting into MySQL", e)
-            
 
-    def create_session(self, session_id:str, user_id:str, epoch:int) -> None:
+
+    def create_session(self, session_id:str, user_id:str, expiration_epoch:int) -> None:
         try:
             cursor = self.connector.cursor(prepared=True)
 
             query_session_create = """INSERT INTO sessions (
                     session_id,
                     user_id,
-                    epoch
+                    expiration
                 ) VALUES (%s,%s,%s)"""
             data = (session_id,
                     user_id,
-                    epoch)
+                    expiration_epoch)
 
             cursor.execute(query_session_create, data)
             cursor.close()
@@ -104,3 +104,18 @@ class Database:
 
         except Exception as e:
             print("Error while inserting into MySQL", e)
+
+    def purge_session(self, session_token:str) -> None:
+        try:
+            cursor = self.connector.cursor(prepared=True)
+
+            query_purge_session = """DELETE FROM sessions WHERE session_id=%s"""
+            data = (session_token,)
+
+            cursor.execute(query_purge_session, data)
+            cursor.close()
+            
+            self.connector.commit()
+
+        except Exception as e:
+            print("Error while deleting from MySQL", e)
