@@ -1,3 +1,7 @@
+# Inheretance from main
+from __main__ import (
+    GOOGLE_DISCOVERY_URL
+)
 
 import requests
 import logging
@@ -6,7 +10,7 @@ import jwt
 
 from urllib3.exceptions import NewConnectionError
 
-def retrieve_jwks(disco:str="https://accounts.google.com/.well-known/openid-configuration") -> object:
+def retrieve_jwks(disco:str=GOOGLE_DISCOVERY_URL) -> object:
     """
     Retrieves the valid jwks for Google OAuth2.
     disco:str - providers discovery document as a HTTP URI

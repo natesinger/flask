@@ -2,36 +2,14 @@
 
 {% block content %}
 
-<link href="static/css/custom/login.css" rel="stylesheet" media="screen">
-<link href="static/css/bundles/bootstrap.min.css" rel="stylesheet">
-<link href="static/css/bundles/floating-labels.css" rel="stylesheet">
-
-{% if bad_registration == "email" %}
-    <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
-        Email exists or is invalid, please fix it or login with your existing acount.
-        <script>document.getElementById("inputEmail").value = null</script>
-    </div>
-{% endif %}
-
-{% if bad_registration == "username" %}
-    <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
-        Username exists or is invalid, please fix it or login with your existing acount.
-        <script>document.getElementById("inputUsername").value = null</script>
-    </div>
-{% endif %}
-
-{% if bad_registration == "code" %}
-    <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
-        Incorrect registration code.
-        <script>document.getElementById("inputCode").value = null</script>
-    </div>
-{% endif %}
+<link href="public/css/custom/register.css" rel="stylesheet" media="screen">
+<link href="public/css/bundles/bootstrap.min.css" rel="stylesheet">
+<link href="public/css/bundles/floating-labels.css" rel="stylesheet">
 
 <form class="form-signin center" action="/register" method="POST" oninput='inputPassword2.setCustomValidity(inputPassword.value != inputPassword2.value ? "Passwords do not match." : "")'>
-
     <div class="form-label-group">
-        <input type="name" id="inputHumanName" name="humanname" class="form-control" placeholder="Human Name" value="{{request.form.humanname}}" required>
-        <label for="inputHumanName">Human Name</label>
+        <input type="username" id="inputUsername" name="username" class="form-control" placeholder="Username" value="{{request.form.username}}" required>
+        <label for="inputUsername">Username</label>
     </div>
 
     <div class="form-label-group">
@@ -40,13 +18,16 @@
     </div>
 
     <div class="form-label-group">
-        <input type="username" id="inputUsername" name="username" class="form-control" placeholder="Username" value="{{request.form.username}}" required>
-        <label for="inputUsername">Username</label>
+        <input type="name" id="inputFirstName" name="first_name" class="form-control" placeholder="First Name" value="{{request.form.first_name}}" required>
+        <label for="inputFirstName">First Name</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="name" id="inputLastName" name="last_name" class="form-control" placeholder="Last Name" value="{{request.form.last_name}}" required>
+        <label for="inputLastName">Last Name</label>
     </div>
     
-    <div style="width: 80%; margin: auto;">
-        <hr style="color:azure;">
-    </div>
+    <hr class="divider">
 
     <div class="form-label-group">
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" value="{{request.form.password}}" required>
@@ -57,26 +38,25 @@
         <input type="password" id="inputPassword2" name="password" class="form-control" placeholder="Password" required>
         <label for="inputPassword2">Confirm Password</label>
     </div>
-    
-    <div style="width: 80%; margin: auto;">
-        <hr style="color:azure;">
-    </div>
-
-    <div class="form-label-group">
-        <input type="code" id="inputCode" name="code" class="form-control" placeholder="Registration Code" value="{{request.form.code}}" required>
-        <label for="inputCode">Code</label>
-    </div>
 
     <button class="btn btn-secondary btn-block custom-button" style="display: block;">
         Register
     </button>
 </form>
 
+{% if bad_registration == "user_exists" %}
+    <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
+        Username or email are not unique! Please try again...
+        <script>document.getElementById("inputUsername").value = null</script>
+        <script>document.getElementById("inputEmail").value = null</script>
+    </div>
+{% endif %}
+
 <!-- acquire jquery-->
-<script type="text/javascript" language="javascript" src="static/js/bundles/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" language="javascript" src="public/js/bundles/jquery-3.6.0.min.js"></script>
 
 <!-- acquire bootstrap-->
-<script src="static/js/bundles/bootstrap.min.js"></script>
+<script src="public/js/bundles/bootstrap.min.js"></script>
 
 {% endblock %}
-  
+

@@ -8,9 +8,23 @@
 
 <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
 
+
+{% if good_registration == "success" %}
+    <div class="alert alert-success" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
+        Created a new user via SSO, please login!
+    </div>
+{% endif %}
+
 {% if bad_login == "credentials" %}
     <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
         Invalid credentials, please check your input and try again
+        <script>document.getElementById("inputPassword").value = null</script>
+    </div>
+{% endif %}
+
+{% if bad_login == "generic" %}
+    <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
+        Something really bad happened, please contact the site administrator.
         <script>document.getElementById("inputPassword").value = null</script>
     </div>
 {% endif %}
