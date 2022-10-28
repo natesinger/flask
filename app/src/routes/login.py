@@ -27,7 +27,7 @@ from src.session_helper import create_session
 def login():
     # provide authentication page
     if request.method == 'GET':
-        return render_template("login.html",
+        return render_template("site/login.html",
                                host_port=HOST_AND_PORT,
                                google_client_id=GOOGLE_CLIENT_ID)
 
@@ -45,7 +45,7 @@ def login():
 
             # if username not in database, failure
             if not retreived_account:
-                return render_template("login.html",
+                return render_template("site/login.html",
                                     host_port=HOST_AND_PORT,
                                     google_client_id=GOOGLE_CLIENT_ID,
                                     bad_login="credentials")
@@ -53,7 +53,7 @@ def login():
             # if password is incorrect, failure
             valid_password = retreived_account[2]
             if not validate_password_bcrypt(attempted_password, valid_password):
-                return render_template("login.html",
+                return render_template("site/login.html",
                                     host_port=HOST_AND_PORT,
                                     google_client_id=GOOGLE_CLIENT_ID,
                                     bad_login="credentials")  
@@ -86,7 +86,7 @@ def login():
 
             # this case should theoretically be impossible as it would be caught above
             if not retreived_account:
-                return render_template("login.html",
+                return render_template("site/login.html",
                                    host_port=HOST_AND_PORT,
                                    google_client_id=GOOGLE_CLIENT_ID,
                                    bad_login="generic")

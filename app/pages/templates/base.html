@@ -12,12 +12,20 @@
   <title>Flask Base</title>
 </head>
 
-<navbar class="navbar navbar-expand-lg navbar-dark bg-dark nav-custom">  
+<navbar class="navbar navbar-expand-lg navbar-dark bg-dark nav-custom" style="flex-wrap: nowrap">  
   <div class="column">
-    <a class="navbar-brand">
+    <a class="navbar-brand" href="/">
       <img src="public/img/logo.svg" class="d-inline-block align-top nav-custom-img" alt="logo">
       Flask Base
     </a>
+  </div>
+
+  <div class="column">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a id="nav-about" class="nav-link nav-custom-item" href="/public-page">Public-Page</a>
+      </li>
+    </ul>
   </div>
 
   {% if user is defined %}
@@ -25,7 +33,7 @@
   <div class="column">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a id="nav-about" class="nav-link nav-custom-item" href="/shell">Shell</a>
+        <a id="nav-about" class="nav-link nav-custom-item" href="/private-page">Private-Page</a>
       </li>
     </ul>
   </div>
@@ -70,7 +78,6 @@
     {% block content %}
     {% endblock %}
   </div>
-    
 </body>
 
 <footer class="nav-custom-footer navbar-dark bg-dark text-center">

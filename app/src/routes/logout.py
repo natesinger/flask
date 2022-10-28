@@ -10,10 +10,11 @@ from flask import (
 
 # Internal imports
 from src.session_helper import purge_session
+from src.authorization_helper import require_role
 
 
-###### TODO MUST REQUIRE AUTHENTICATION ########
 @app.route("/logout")
+@require_role("guest")
 def logout():
     authorization_header = request.cookies['Authorization']
     session_token = authorization_header.split(' ')[1]

@@ -37,6 +37,8 @@ import src.routes.about
 import src.routes.login
 import src.routes.logout
 import src.routes.register
+import src.routes.profile
+
 
 # start application
 if __name__ == "__main__": app.run(ssl_context="adhoc", debug=True)

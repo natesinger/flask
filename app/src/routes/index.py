@@ -9,4 +9,5 @@ from flask import (
 )
 
 @app.route("/")
-def index(): return redirect("/login")
+def index():
+    return redirect("/profile")

@@ -24,7 +24,7 @@ from src.user_helper import create_user
 def register():
     # provide authentication page
     if request.method == 'GET':
-        return render_template("register.html")
+        return render_template("site/register.html")
 
     if request.method == 'POST':
 
@@ -41,12 +41,12 @@ def register():
             # verify that the username is unique
             if database.lookup_by_username(username):
                 logging.error(f"Collision with username '{database.lookup_by_email(username)}'")
-                return render_template("register.html", bad_registration="user_exists")
+                return render_template("site/register.html", bad_registration="user_exists")
 
             # verify that the email is unique
             if database.lookup_by_email(email):
                 logging.error(f"Collision with email '{database.lookup_by_email(email)}'")
-                return render_template("register.html", bad_registration="user_exists")
+                return render_template("site/register.html", bad_registration="user_exists")
 
             # create new records for the user
             create_user(database, username, email, password, first_name, last_name)
@@ -73,7 +73,7 @@ def register():
             # create new records for the user
             create_user(database, "sso", valid_jwt['email'], "sso", valid_jwt['given_name'], valid_jwt['family_name'])
 
-            return render_template("login.html",
+            return render_template("site/login.html",
                                    host_port=HOST_AND_PORT,
                                    google_client_id=GOOGLE_CLIENT_ID,
                                    good_registration="success")

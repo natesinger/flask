@@ -49,6 +49,51 @@ class Database:
         except Exception as e:
             print("Error while connecting to MySQL", e)
 
+    def lookup_uid_by_session(self, session_token:str) -> tuple:
+        try:
+            cursor = self.connector.cursor(prepared=True)
+
+            query_sessionid_lookup = """SELECT * FROM sessions WHERE session_id=%s;"""
+            data = (session_token,)
+
+            cursor.execute(query_sessionid_lookup, data)
+            retreived_uid = cursor.fetchone()[1]
+
+            return retreived_uid
+
+        except Exception as e:
+            print("Error while connecting to MySQL", e)
+    
+    def lookup_role_by_uid(self, user_id:str) -> str:
+        try:
+            cursor = self.connector.cursor(prepared=True)
+
+            query_uid_lookup = """SELECT * FROM accounts WHERE user_id=%s;"""
+            data = (user_id,)
+
+            cursor.execute(query_uid_lookup, data)
+            retreived_roles = cursor.fetchone()[7]
+
+            return retreived_roles
+
+        except Exception as e:
+            print("Error while connecting to MySQL", e)
+
+    def lookup_account_by_uid(self, user_id:str) -> str:
+        try:
+            cursor = self.connector.cursor(prepared=True)
+
+            query_uid_lookup = """SELECT * FROM accounts WHERE user_id=%s;"""
+            data = (user_id,)
+
+            cursor.execute(query_uid_lookup, data)
+            retreived_account = cursor.fetchone()
+
+            return retreived_account
+
+        except Exception as e:
+            print("Error while connecting to MySQL", e)
+
     def create_account(self, user_id:str, username:str, password_hash:str,
                      given_name:str, family_name:str, email:str, 
                      email_verified:bool, roles:str) -> None:

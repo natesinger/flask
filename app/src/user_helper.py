@@ -12,7 +12,7 @@ def create_user(database:object,
     user_id = str(uuid.uuid1())
     password_hash_salted = generate_password_bcrypt(password)
     email_verified = False
-    roles = "guest"
+    roles = "member"
 
     database.create_account(user_id,
                             username,

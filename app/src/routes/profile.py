@@ -14,8 +14,9 @@ from flask import (
 from src.authorization_helper import require_role
 
 
-@app.route("/about")
-def about():
+@app.route("/profile")
+@require_role("member")
+def profile():
     name = None
 
     if "Authorization" in request.cookies:
@@ -28,5 +29,4 @@ def about():
 
         if retreived_account: name=retreived_account[3]
 
-    if name: return render_template("site/about.html", user=name)
-    else: return render_template("site/about.html")
+    return render_template("site/profile.html", user=name)
