@@ -1,0 +1,90 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+
+<link href="public/css/custom/login.css" rel="stylesheet" media="screen">
+<link href="public/css/bundles/bootstrap.min.css" rel="stylesheet">
+<link href="public/css/bundles/floating-labels.css" rel="stylesheet">
+
+<meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+
+{% if bad_login == "credentials" %}
+    <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
+        Invalid credentials, please check your input and try again
+        <script>document.getElementById("inputPassword").value = null</script>
+    </div>
+{% endif %}
+
+{% if bad_login == "csrf" %}
+    <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
+        CSRF Error: What do you think you're doing home slice.... 0.o
+        <script>document.getElementById("inputPassword").value = null</script>
+    </div>
+{% endif %}
+
+{% if bad_login == "other" %}
+    <div class="alert alert-danger" role="alert" style="width: 60%; margin: auto; text-align: center; margin-top: 5%; ">
+        An unknown error occured, please contact the site owner
+        <script>document.getElementById("inputPassword").value = null</script>
+    </div>
+{% endif %}
+
+<form class="form-signin center" action="/login" method="POST">
+
+    <div class="form-label-group">
+        <input type="username" id="inputUsername" name="username" value="{{request.form.username}}" class="form-control" placeholder="Username" required>
+        <label for="inputUsername">Username</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" value="{{request.form.password}}" required>
+        <label for="inputPassword">Password</label>
+    </div>
+
+    <button class="btn btn-primary btn-block custom-button" style="display: block;" type="submit">
+        Login
+    </button>
+
+    <a href="/register" style="text-decoration: none;">
+        <button2 class="btn btn-secondary btn-block custom-button" style="display: block;">
+            Register
+        </button2>
+    </a>
+
+    {% if google_client_id %}
+
+    <hr class="divider">
+
+    <div class="custom-button">
+        <div id="g_id_onload"
+        data-client_id={{google_client_id}}
+        data-login_uri="https://{{host_port}}/login"
+        data-ux_mode="redirect"
+        data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="signin_with"
+            data-shape="rectangular"
+            data-logo_alignment="left"
+            data-width="250"
+            style="display: flex;justify-content:center;">
+        </div>
+    </div>
+
+    {% endif %}
+</form>
+
+<!-- acquire google sso client-->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<!-- acquire jquery-->
+<script type="text/javascript" language="javascript" src="public/js/bundles/jquery-3.6.0.min.js"></script>
+
+<!-- acquire bootstrap-->
+<script src="public/js/bundles/bootstrap.min.js"></script>
+
+{% endblock %}
+  
